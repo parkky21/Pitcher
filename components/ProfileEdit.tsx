@@ -27,7 +27,9 @@ const StartupForm = ({ id }: { id: string }) => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const user = await client.fetch(AUTHOR_BY_SESSION_ID, { id });
+                const user = await client
+                    .withConfig({useCdn:false})
+                    .fetch(AUTHOR_BY_SESSION_ID, { id });
                 if (user) {
                     setName(user.name || "");
                     setUsername(user.username || "");
