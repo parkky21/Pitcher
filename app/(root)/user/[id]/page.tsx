@@ -14,8 +14,9 @@ export const experimental_ppr=true;
 const Page = async ({params}:{params:Promise<{id:string}>}) => {
     const id =(await params).id;
     const session = await auth();
-
-    const user= await client.fetch(AUTHOR_BY_SESSION_ID,{id});
+    const user= await client
+        .withConfig({useCdn:false})
+        .fetch(AUTHOR_BY_SESSION_ID,{id});
     if(!user) return notFound();
 
     return (

@@ -34,7 +34,6 @@ const StartupForm = ({post}:{post:StartupTypeCard}) => {
                 link,
                 pitch,
             };
-
             await formSchema.parseAsync(formValues);
 
             const result = await updatePitch(post._id,prevState, formData, pitch);
@@ -46,6 +45,7 @@ const StartupForm = ({post}:{post:StartupTypeCard}) => {
                 });
 
                 router.push(`/startup/${result._id}`);
+
             }
 
             return result;

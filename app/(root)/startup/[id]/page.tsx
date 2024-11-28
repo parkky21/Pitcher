@@ -9,7 +9,7 @@ import markdownit from "markdown-it";
 import {Skeleton} from "@/components/ui/skeleton";
 import View from "@/components/View";
 import {auth} from "@/auth";
-import {FilePenLine, LogOut} from 'lucide-react';
+import {FilePenLine} from 'lucide-react';
 
 const md = markdownit();
 export const experimental_ppr = true;
@@ -17,7 +17,9 @@ export const experimental_ppr = true;
 
 const Page = async ({params}:{params:Promise<{id:string}>}) => {
     const id =(await params).id;
-    const post = await client.fetch(STARTUPS_BY_ID_QUERY,{id});
+    const post = await client
+        .withConfig({useCdn:false})
+        .fetch(STARTUPS_BY_ID_QUERY,{id});
     const session = await auth();
     if(!post){return notFound()}
 
