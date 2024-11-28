@@ -64,7 +64,7 @@ const Page = async ({params}:{params:Promise<{id:string}>}) => {
                     <h3 className="text-30-bold flex items-center">
                         Pitch Details
                         {
-                            session.id == post.author?._id && (
+                            session?.id == post.author?._id && (
                                 <Link href={`/startup/edit/${id}`}>
                                     <div className="ml-3"> {/* Adds some space between the text and the icon */}
                                         <FilePenLine className="size-6 text-white-500"/>
