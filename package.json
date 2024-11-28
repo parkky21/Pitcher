@@ -34,6 +34,7 @@
     "next-sanity": "^9.8.3-canary.1",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react-hot-toast": "^2.4.1",
     "sanity": "^3.64.1",
     "sanity-plugin-markdown": "^5.0.0",
     "server-only": "^0.0.1",
