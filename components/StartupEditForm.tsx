@@ -10,15 +10,17 @@ import { formSchema } from "@/lib/validation";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { createPitch } from "@/lib/actions";
+import { updatePitch} from "@/lib/actions";
+import {StartupTypeCard} from "@/components/StartupCard";
 
-const StartupForm = () => {
+const StartupForm = ({post}:{post:StartupTypeCard}) => {
+
     const [errors, setErrors] = useState<Record<string, string>>({});
-    const [pitch, setPitch] = useState("");
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [category, setCategory] = useState("");
-    const [link, setLink] = useState("");
+    const [pitch, setPitch] = useState(post?.pitch);
+    const [title, setTitle] = useState(post?.title);
+    const [description, setDescription] = useState(post?.description);
+    const [category, setCategory] = useState(post?.category);
+    const [link, setLink] = useState(post?.image);
 
     const { toast } = useToast();
     const router = useRouter();
@@ -26,10 +28,6 @@ const StartupForm = () => {
     const handleFormSubmit = async (prevState: any, formData: FormData) => {
         try {
             const formValues = {
-                // title: formData.get("title") as string,
-                // description: formData.get("description") as string,
-                // category: formData.get("category") as string,
-                // link: formData.get("link") as string,
                 title,
                 description,
                 category,
@@ -39,12 +37,12 @@ const StartupForm = () => {
 
             await formSchema.parseAsync(formValues);
 
-            const result = await createPitch(prevState, formData, pitch);
+            const result = await updatePitch(post._id,prevState, formData, pitch);
 
             if (result.status == "SUCCESS") {
                 toast({
                     title: "Success",
-                    description: "Your startup pitch has been created successfully",
+                    description: "Your startup pitch has been modified successfully",
                 });
 
                 router.push(`/startup/${result._id}`);
@@ -111,7 +109,7 @@ const StartupForm = () => {
                 </label>
                 <Textarea
                     id="description"
-                     value={description}
+                    value={description}
                     onChange={(e) => setDescription(e.target.value)}                    name="description"
                     className="startup-form_textarea"
                     required
@@ -188,7 +186,7 @@ const StartupForm = () => {
                 className="startup-form_btn text-white"
                 disabled={isPending}
             >
-                {isPending ? "Submitting..." : "Submit Your Pitch"}
+                {isPending ? "Saving..." : "Save Changes"}
                 <Send className="size-6 ml-2" />
             </Button>
         </form>

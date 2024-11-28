@@ -6,6 +6,8 @@ import {notFound} from "next/navigation";
 import Image from "next/image";
 import UserStartUps from "@/components/UserStartUps";
 import {StartupCardSkeleton} from "@/components/StartupCard";
+import Link from "next/link";
+import { UserPen } from 'lucide-react';
 
 export const experimental_ppr=true;
 
@@ -37,6 +39,14 @@ const Page = async ({params}:{params:Promise<{id:string}>}) => {
                     <p className="mt-1 text-center text-14-normal">
                         {user?.bio}
                     </p>
+                    <div className="mt-4 flex ">
+                        {session?.id == id ?
+                            <Link href={`/user/edit/${id}`}>
+                                <div><UserPen /></div>
+                            </Link>
+                            : null}
+                    </div>
+
                 </div>
 
                 <div className="flex-1 flex flex-col gap-5 lg:-m-5">

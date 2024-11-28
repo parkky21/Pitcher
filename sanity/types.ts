@@ -255,7 +255,7 @@ export type AUTHOR_BY_SESSION_IDResult = {
   bio: string | null;
 } | null;
 // Variable: STARTUPS_BY_AUTHOR_ID
-// Query: *[_type == "startup" && author._ref==$id] | order(_createdAt desc) {  _id,   title,   slug,  _createdAt,  author -> {    _id, name, image, bio  },   views,  description,  category,  image,}
+// Query: *[_type == "startup" && author._ref==$id] | order(_createdAt desc) {  _id,   title,   slug,  _createdAt,  author -> {    _id, name, image, bio  },   views,  description,  category,  image,  pitch,}
 export type STARTUPS_BY_AUTHOR_IDResult = Array<{
   _id: string;
   title: string | null;
@@ -271,6 +271,7 @@ export type STARTUPS_BY_AUTHOR_IDResult = Array<{
   description: string | null;
   category: string | null;
   image: string | null;
+  pitch: string | null;
 }>;
 
 // Query TypeMap
@@ -282,6 +283,6 @@ declare module "@sanity/client" {
     "*[_type == \"startup\" && _id == $id][0]{\n    _id,\n  views,\n}": STARTUP_VIEWS_QUERYResult;
     "*[_type == \"author\" && id== $id][0]  {\n    _id,\n    id,\n    name,\n    username, \n    image,\n    bio\n  \n}": AUTHOR_BY_GOOGLE_ID_QUERYResult;
     "*[_type == \"author\" && _id== $id][0] {\n    _id,\n    name,\n    username, \n    image,\n    bio\n}": AUTHOR_BY_SESSION_IDResult;
-    "*[_type == \"startup\" && author._ref==$id] | order(_createdAt desc) {\n  _id, \n  title, \n  slug,\n  _createdAt,\n  author -> {\n    _id, name, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n}": STARTUPS_BY_AUTHOR_IDResult;
+    "*[_type == \"startup\" && author._ref==$id] | order(_createdAt desc) {\n  _id, \n  title, \n  slug,\n  _createdAt,\n  author -> {\n    _id, name, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n  pitch,\n}": STARTUPS_BY_AUTHOR_IDResult;
   }
 }

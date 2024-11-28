@@ -8,6 +8,8 @@ import Image from "next/image";
 import markdownit from "markdown-it";
 import {Skeleton} from "@/components/ui/skeleton";
 import View from "@/components/View";
+import {auth} from "@/auth";
+import {FilePenLine, LogOut} from 'lucide-react';
 
 const md = markdownit();
 export const experimental_ppr = true;
@@ -15,9 +17,8 @@ export const experimental_ppr = true;
 
 const Page = async ({params}:{params:Promise<{id:string}>}) => {
     const id =(await params).id;
-    console.log({id});
     const post = await client.fetch(STARTUPS_BY_ID_QUERY,{id});
-
+    const session = await auth();
     if(!post){return notFound()}
 
     const parsedContent = md.render(post?.pitch || '');
@@ -25,10 +26,14 @@ const Page = async ({params}:{params:Promise<{id:string}>}) => {
     return (
         <>
             <section className="pink_container !min-h-[230px]">
+
                 <p className="tag">
                     {formatDate(post._createdAt)}
                 </p>
-                <h1 className="heading">{post.title}</h1>
+                <h1 className="heading">{post.title}
+
+                </h1>
+
                 <p className="sub-heading !max-w-5xl">{post.description}</p>
             </section>
 
@@ -50,27 +55,42 @@ const Page = async ({params}:{params:Promise<{id:string}>}) => {
                             </div>
 
                         </Link>
+
                         <p className="category-tag">
                             {post.category}
                         </p>
                     </div>
-                    <h3 className="text-30-bold">Pitch Details</h3>
-                    {parsedContent ?(
+
+                    <h3 className="text-30-bold flex items-center">
+                        Pitch Details
+                        {
+                            session.id == post.author?._id && (
+                                <Link href={`/startup/edit/${id}`}>
+                                    <div className="ml-3"> {/* Adds some space between the text and the icon */}
+                                        <FilePenLine className="size-6 text-white-500"/>
+                                    </div>
+                                </Link>
+                            )
+                        }
+                    </h3>
+
+                    {parsedContent ? (
                         <article className="prose max-w-4xl font-work-sans break-all "
-                            dangerouslySetInnerHTML={{__html:parsedContent}}/>
-                    ):(
+                                 dangerouslySetInnerHTML={{__html: parsedContent}}/>
+                    ) : (
                         <p className="no-result">
                             No details provided
                         </p>
 
                     )}
                 </div>
-                <hr className="divider" />
+                <hr className="divider"/>
                 {/*TODO:editor choice*/}
 
-                <Suspense fallback={<Skeleton className="view_skeleton" />}>
+                <Suspense fallback={<Skeleton className="view_skeleton"/>}>
                     <View id={id}/>
                 </Suspense>
+
 
             </section>
         </>

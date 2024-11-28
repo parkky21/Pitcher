@@ -70,4 +70,5 @@ export const STARTUPS_BY_AUTHOR_ID =
   description,
   category,
   image,
+  pitch,
 }`);
