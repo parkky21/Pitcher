@@ -68,8 +68,8 @@ const Page = async ({params}:{params:Promise<{id:string}>}) => {
                         {
                             session?.id == post.author?._id && (
                                 <Link href={`/startup/edit/${id}`}>
-                                    <div className="ml-3"> {/* Adds some space between the text and the icon */}
-                                        <FilePenLine className="size-6 text-white-500"/>
+                                    <div className="ml-3 flex bg-pink-100 hover:bg-pink-300 rounded-full p-2"> {/* Adds some space between the text and the icon */}
+                                        <FilePenLine className="size-6 "/>
                                     </div>
                                 </Link>
                             )

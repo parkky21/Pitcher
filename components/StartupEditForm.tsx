@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { updatePitch} from "@/lib/actions";
 import {StartupTypeCard} from "@/components/StartupCard";
 
-const StartupForm = ({post}:{post:StartupTypeCard}) => {
+const StartupEditForm = ({post}:{post:StartupTypeCard}) => {
 
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [pitch, setPitch] = useState(post?.pitch);
@@ -193,4 +193,4 @@ const StartupForm = ({post}:{post:StartupTypeCard}) => {
     );
 };
 
-export default StartupForm;
+export default StartupEditForm;

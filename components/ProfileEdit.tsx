@@ -8,9 +8,9 @@ import { Send } from "lucide-react";
 import { userSchema} from "@/lib/validation";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import {redirect, useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 import { updateUser } from "@/lib/actions";
-import {auth} from "@/auth";
+
 
 export interface userType {
     _id:string,
@@ -20,7 +20,7 @@ export interface userType {
     image:string,
 }
 
-const StartupForm =({ id,user }: { id: string , user: userType }) => {
+const ProfileEdit =({ id,user }: { id: string , user: userType }) => {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [name, setName] = useState(user.name || "");
     const [username, setUsername] = useState(user.username || "");
@@ -151,4 +151,4 @@ const StartupForm =({ id,user }: { id: string , user: userType }) => {
     );
 };
 
-export default StartupForm;
+export default ProfileEdit;
