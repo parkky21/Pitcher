@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -8,45 +8,27 @@ import { Send } from "lucide-react";
 import { userSchema} from "@/lib/validation";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
+import {redirect, useRouter} from "next/navigation";
 import { updateUser } from "@/lib/actions";
-import { client } from "@/sanity/lib/client";
-import { AUTHOR_BY_SESSION_ID } from "@/lib/queries";
+import {auth} from "@/auth";
 
-const StartupForm = ({ id }: { id: string }) => {
+export interface userType {
+    _id:string,
+    name:string,
+    username:string,
+    bio:string,
+    image:string,
+}
+
+const StartupForm =({ id,user }: { id: string , user: userType }) => {
     const [errors, setErrors] = useState<Record<string, string>>({});
-    const [name, setName] = useState("");
-    const [username, setUsername] = useState("");
-    const [image, setImage] = useState("");
-    const [bio, setBio] = useState("");
+    const [name, setName] = useState(user.name || "");
+    const [username, setUsername] = useState(user.username || "");
+    const [image, setImage] = useState(user.image || "");
+    const [bio, setBio] = useState(user.bio || "");
 
     const { toast } = useToast();
     const router = useRouter();
-
-    // Fetch user details on component mount
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const user = await client
-                    .withConfig({useCdn:false})
-                    .fetch(AUTHOR_BY_SESSION_ID, { id });
-                if (user) {
-                    setName(user.name || "");
-                    setUsername(user.username || "");
-                    setImage(user.image || "");
-                    setBio(user.bio || "");
-                }
-            } catch (error) {
-                toast({
-                    title: "Error",
-                    description: "Failed to fetch user details.",
-                    variant: "destructive",
-                });
-            }
-        };
-
-        fetchUser();
-    }, [id, toast]);
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

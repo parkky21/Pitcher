@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from "next/link";
 import Image from "next/image";
-import {auth, signIn, signOut} from "@/auth";
+import {auth} from "@/auth";
 import {BadgePlus, LogOut} from "lucide-react";
 import {AvatarImage, Avatar,AvatarFallback} from "@/components/ui/avatar";
 
@@ -14,7 +14,7 @@ const Navbar = async () => {
         <header className="px-5 py-3 bg-white shadow-sm font-work-sans">
             <nav className="flex justify-between items-center  text-black">
                 <Link href="/">
-                    <Image src="/logo.png" alt="logo" width={144} height={30} />
+                    <Image src="/logo.png" alt="logo" width={125} height={28} />
                 </Link>
 
 
